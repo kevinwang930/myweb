@@ -33,8 +33,8 @@ module.exports = merge(baseConfig, {
 	target: ['web', 'electron-renderer'],
 
 	entry: [
-		'core-js',
-		'regenerator-runtime/runtime',
+		// 'core-js',
+		// 'regenerator-runtime/runtime',
 		path.join(webpackPaths.srcRendererPath, 'index.js'),
 	],
 
