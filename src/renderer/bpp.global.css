@@ -1,0 +1,108 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* .page {
+    margin-left: 20px;
+    margin-right: 25px;
+    margin-top: 14px;
+    margin-bottom: 20px;
+} */
+.side {
+    position:fixed;
+
+    width: 192px;
+}
+
+.menu {
+    height: 100vh;
+    overflow-y:scroll;
+    position:fixed;
+    width: 192px;
+    overflow-x:hidden
+}
+
+.subMenu {
+    padding-left: 30px;
+}
+
+main {
+
+    margin-left: 192px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right:10px;
+    /* height:100vh; */
+    /* width: 1300px; */
+    /* overflow-y: scroll; */
+}
+header {
+    @apply  h-8
+}
+main section{
+
+    @apply mt-10
+
+}
+
+section.reportContent {
+    width: 942px;
+    height:1290px;
+    margin-left:  auto;
+    margin-right: auto;
+    border-width: 1px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.chartReport {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+h1 {
+    @apply my-10  text-xl font-bold
+}
+
+h2 {
+    @apply my-5 py-5 text-lg font-semibold
+}
+
+
+
+.chartView {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.chartViewText {
+    @apply border-l-2 border-gray-300 ml-2 pl-8 text-base
+}
+ul {
+    list-style-type: circle;
+}
+ul.chartViewTextUl li {
+    @apply my-5 py-5
+}
+
+.chart {
+    aspect-ratio: 4/3;
+}
+
+@media print {
+.noPrint {
+    display: none !important;
+}
+
+main {
+    margin-left: -1px !important;
+}
+main section {
+    margin:-1px !important
+}
+
+
+}
+
+

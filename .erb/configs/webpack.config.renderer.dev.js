@@ -10,7 +10,8 @@ const baseConfig = require('./webpack.config.base')
 const webpackPaths = require('./webpack.paths')
 const checkNodeEnv = require('../scripts/check-node-env')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-
+const BundleAnalyzerPlugin =
+	require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
 // at the dev webpack config is not accidentally run in a production environment
 if (process.env.NODE_ENV === 'production') {
@@ -76,17 +77,7 @@ module.exports = merge(baseConfig, {
 			},
 			{
 				test: /\.global\.css$/,
-				use: [
-					{
-						loader: 'style-loader',
-					},
-					{
-						loader: 'css-loader',
-						options: {
-							sourceMap: true,
-						},
-					},
-				],
+				use: ['style-loader', 'css-loader', 'postcss-loader'],
 			},
 			{
 				test: /^((?!\.global).)*\.css$/,
@@ -264,6 +255,7 @@ module.exports = merge(baseConfig, {
 			isDevelopment: process.env.NODE_ENV !== 'production',
 			nodeModules: webpackPaths.appNodeModulesPath,
 		}),
+		new BundleAnalyzerPlugin(),
 	],
 
 	node: {
