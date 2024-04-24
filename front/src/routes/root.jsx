@@ -1,4 +1,5 @@
 import {Link, Outlet, Route, Routes} from "react-router-dom";
+import Video from "../components/video.jsx";
 
 
 export default function Root() {
@@ -13,6 +14,7 @@ export default function Root() {
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="video" element={<Video />} />
 
                     {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
@@ -37,6 +39,9 @@ function Layout() {
                         </li>
                         <li>
                             <Link to="/about">About</Link>
+                        </li>
+                        <li>
+                            <Link to="/video">Video</Link>
                         </li>
                         <li>
                             <Link to="/dashboard">Dashboard</Link>
