@@ -23,9 +23,9 @@ const router = createRouter({
       component: () => import('../views/Video.vue')
     },
     {
-      path: '/video-list',
+      path: '/artifact-list',
       name: 'video List',
-      component: () => import('../views/VideoList.vue')
+      component: () => import('../views/ArtifactList.vue')
     },
     {
       path: '/login',
