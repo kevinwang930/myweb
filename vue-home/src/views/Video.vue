@@ -11,6 +11,7 @@
 import { useRoute } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import request from '@/utils/request'
+import Hls from 'hls.js'
 
 const route = useRoute()
 const artifactSrc = ref(null)
@@ -29,7 +30,7 @@ onMounted(() => {
       params: {
         artifactId: artifactId
       },
-      method: 'get',
+      method: 'get'
     })
       .then((resp) => {
         // Append the stream to the video element
@@ -45,7 +46,7 @@ onMounted(() => {
       params: {
         id: artifactId
       },
-      method: 'get',
+      method: 'get'
     })
       .then((resp) => {
         // Append the stream to the video element
@@ -84,25 +85,6 @@ onMounted(() => {
 //   }
 // }
 //
-// function initHls() {
-//   const video = videoPlayer.value
-//   if (Hls.isSupported()) {
-//     const hls = new Hls({
-//       loader: customLoader
-//     })
-//
-//     hls.loadSource(`http://localhost:8080/melon/artifacts/video?artifactId=${artifactId.value}`)
-//     hls.attachMedia(video)
-//     video.play()
-//
-//   } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-//     video.src = videoUrl
-//     video.addEventListener('canplaythrough', () => {
-//       video.play()
-//     })
-//   }
-
-// }
 </script>
 
 <style>

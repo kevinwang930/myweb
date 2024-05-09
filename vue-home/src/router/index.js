@@ -24,6 +24,12 @@ const router = createRouter({
       props: true
     },
     {
+      path: '/videohls',
+      name: 'videohls',
+      component: () => import('../views/VideoHls.vue'),
+      props: true
+    },
+    {
       path: '/artifact-list',
       name: 'video List',
       component: () => import('../views/ArtifactList.vue')

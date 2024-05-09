@@ -23,7 +23,10 @@
           <input type="file" multiple @change="upload(artifact, $event)" />
         </td>
         <td>
-          <button @click="navigateToVideo(artifact)">Play Video</button>
+          <button @click="navigateToVideo(artifact)">Play</button>
+        </td>
+        <td>
+          <button @click="m3u8(artifact)">Play hls</button>
         </td>
       </tr>
       </tbody>
@@ -140,6 +143,10 @@ function uploadVideo(artifact, event) {
 
 function navigateToVideo(artifact) {
   router.push({ path: '/video', query: artifact })
+}
+
+function m3u8(artifact) {
+  router.push({ path: '/videohls', query: artifact })
 }
 
 function handleModalClose() {
