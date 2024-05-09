@@ -2,16 +2,17 @@ package kevin.website;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kevin.website.model.Range;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
 
 @Controller
 public class VideoController {
@@ -81,6 +82,23 @@ public class VideoController {
             throw new RuntimeException(e);
         }
     }
+
+    @PostMapping(path="/images")
+    public ResponseEntity<String> images(@RequestParam("files") MultipartFile[] files, HttpServletRequest request, HttpServletResponse response) {
+        if (files != null && files.length > 0) {
+            for (MultipartFile file : files) {
+                // Process each file here
+                System.out.println("Received file: " + file.getOriginalFilename() + " with size: " + file.getSize());
+                // You might want to save it, analyze it, etc.
+            }
+            return ResponseEntity.ok("Successfully uploaded " + files.length + " files.");
+        } else {
+            return ResponseEntity.badRequest().body("No files were uploaded.");
+        }
+
+    }
+
+
 
 }
 

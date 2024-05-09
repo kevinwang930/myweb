@@ -23,13 +23,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,defineEmits } from 'vue'
 import request from '@/utils/request.js'
-
 const title = ref('')
 const description = ref('')
 const type = ref('')
-
+const emit = defineEmits(['close'])
 
 const createArtifact = () => {
   request({
@@ -43,7 +42,7 @@ const createArtifact = () => {
   })
     .then((resp) => {
       // Handle successful creation
-      $emit('close')
+      emit('close')
     })
     .catch((err) => {
       console.log(err)

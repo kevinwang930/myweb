@@ -20,12 +20,14 @@ const router = createRouter({
     {
       path: '/video',
       name: 'video',
-      component: () => import('../views/Video.vue')
+      component: () => import('../views/Video.vue'),
+      props: true
     },
     {
       path: '/artifact-list',
       name: 'video List',
       component: () => import('../views/ArtifactList.vue')
+
     },
     {
       path: '/login',
