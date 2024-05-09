@@ -28,6 +28,13 @@
       </tr>
       </tbody>
     </table>
+    <pagination
+      v-show="total>0"
+      :total="total"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
+      @pagination="fetchVideoList"
+    />
     <create-artifact-modal v-if="showCreateModal" @close="handleModalClose" />
   </div>
 </template>
@@ -36,8 +43,18 @@
 import request from '@/utils/request.js'
 import { onMounted, ref } from 'vue'
 import CreateArtifactModal from '@/components/CreateArtifactModal.vue'
+import pagination from '@/components/Pagination/index.vue'
 import { useRoute, useRouter } from 'vue-router'
-
+const queryParams = ref({
+  pageNum: 1,
+  pageSize: 10,
+  operIp: undefined,
+  title: undefined,
+  operName: undefined,
+  businessType: undefined,
+  status: undefined
+});
+const total = ref(0);
 const artifacts = ref([])
 const showCreateModal = ref(false)
 const router = useRouter()
@@ -49,10 +66,16 @@ function fetchVideoList() {
       isToken: true,
       repeatSubmit: false
     },
-    method: 'get'
+    method: 'get',
+    params: {
+      pageNum: queryParams.value.pageNum,
+      pageSize: queryParams.value.pageSize,
+      orderByColumn: "artifactTitle"
+    }
   })
     .then((resp) => {
       artifacts.value = resp?.rows
+      total.value = resp.total
     })
     .catch((err) => {
       console.log(err)
