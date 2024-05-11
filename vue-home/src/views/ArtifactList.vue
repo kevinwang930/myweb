@@ -28,6 +28,9 @@
         <td>
           <button @click="m3u8(artifact)">Play hls</button>
         </td>
+        <td>
+          <button @click="onDelete(artifact)">delete</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -48,6 +51,7 @@ import { onMounted, ref } from 'vue'
 import CreateArtifactModal from '@/components/CreateArtifactModal.vue'
 import pagination from '@/components/Pagination/index.vue'
 import { useRoute, useRouter } from 'vue-router'
+import qs from 'qs'
 const queryParams = ref({
   pageNum: 1,
   pageSize: 10,
@@ -64,7 +68,7 @@ const router = useRouter()
 
 function fetchVideoList() {
   request({
-    url: 'melon/artifacts/list',
+    url: 'melon/artifacts/v1/list',
     headers: {
       isToken: true,
       repeatSubmit: false
@@ -118,7 +122,7 @@ function upload(artifact,event) {
 function uploadVideo(artifact, event) {
   const file = event.target.files[0]
   request({
-    url: `melon/artifacts/video`,
+    url: `melon/artifacts/v1/video`,
     method: 'post',
     timeout: 300000,
     data: file,
@@ -147,6 +151,27 @@ function navigateToVideo(artifact) {
 
 function m3u8(artifact) {
   router.push({ path: '/videohls', query: artifact })
+}
+
+function onDelete(artifact) {
+  request({
+    url: `melon/artifacts/v1/artifact`,
+    method: 'delete',
+    params: {
+      ids: [artifact.id,],
+    },
+    paramsSerializer: function(params) {
+      return qs.stringify(params,{arrayFormat: 'comma'})
+    }
+  })
+    .then((resp) => {
+      // Handle successful upload
+      console.log('Video delete successfully')
+      fetchVideoList()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 function handleModalClose() {

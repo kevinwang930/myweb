@@ -31,7 +31,7 @@ function initHls() {
   if (Hls.isSupported()) {
     const hls = new Hls()
     const token = getToken();
-    hls.loadSource(`http://localhost:8080/melon/artifacts/m3u8?artifactId=${artifactId}&t=${token}`)
+    hls.loadSource(`http://localhost:8080/melon/artifacts/v1/m3u8?artifactId=${artifactId}&t=${token}`)
     hls.attachMedia(video)
     video.play()
   }

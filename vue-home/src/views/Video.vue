@@ -25,7 +25,7 @@ onMounted(() => {
 
   if (isVideo.value) {
     request({
-      url: `melon/artifacts/video`,
+      url: `melon/artifacts/v1/video`,
       timeout: 300000,
       params: {
         artifactId: artifactId
@@ -41,7 +41,7 @@ onMounted(() => {
       })
   } else {
     request({
-      url: `melon/artifacts/images`,
+      url: `melon/artifacts/v1/images`,
       timeout: 300000,
       params: {
         id: artifactId

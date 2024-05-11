@@ -16,6 +16,7 @@
           <label for="type">type:</label>
           <input type="text" id="type" v-model="type" required>
         </div>
+        <input  type="file" @change="onFileChange($event)" />
         <button type="submit">Create</button>
       </form>
     </div>
@@ -28,17 +29,21 @@ import request from '@/utils/request.js'
 const title = ref('')
 const description = ref('')
 const type = ref('')
+const cover = ref(null)
 const emit = defineEmits(['close'])
 
 const createArtifact = () => {
+  const formData = new FormData()
+  formData.append('artifactTitle', title.value)
+  formData.append('artifactDescription', description.value)
+  formData.append('artifactType', type.value)
+  formData.append('cover', cover.value)
+
   request({
-    url: 'melon/artifacts/create',
+    url: 'melon/artifacts/v1/artifact',
     method: 'post',
-    data: {
-      artifactTitle: title.value,
-      artifactDescription: description.value,
-      artifactType: type.value
-    }
+    data: formData,
+    headers: {'Content-Type': 'multipart/form-data'}
   })
     .then((resp) => {
       // Handle successful creation
@@ -47,6 +52,10 @@ const createArtifact = () => {
     .catch((err) => {
       console.log(err)
     })
+}
+
+function onFileChange(event) {
+  cover.value = event.target.files[0]
 }
 </script>
 
