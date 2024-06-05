@@ -9,7 +9,7 @@ export function login(username, password, code, uuid) {
     uuid
   }
   return request({
-    url: '/auth/login',
+    url: '/melon-auth/login',
     headers: {
       isToken: false,
       repeatSubmit: false
@@ -22,7 +22,7 @@ export function login(username, password, code, uuid) {
 // 注册方法
 export function register(data) {
   return request({
-    url: '/auth/register',
+    url: '/melon-auth/register',
     headers: {
       isToken: false
     },
@@ -34,7 +34,7 @@ export function register(data) {
 // 获取用户详细信息
 export function getInfo() {
   return request({
-    url: '/system/user/getInfo',
+    url: '/melon-system/user/v1/info',
     method: 'get'
   })
 }

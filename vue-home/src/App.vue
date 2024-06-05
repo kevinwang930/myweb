@@ -1,15 +1,28 @@
 <script setup>
+
+
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import {removeToken} from '@/utils/auth.js'
+import router from '@/router/index.js'
+
+function handleLogout() {
+  removeToken()
+  localStorage.removeItem('token')
+}
+
+function handleRegister() {
+  router.push('/register')
+}
+
+
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+    <button @click="handleLogout" class="logout-button">Logout</button>
+    <button @click="handleRegister" class="register-button">register</button>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>

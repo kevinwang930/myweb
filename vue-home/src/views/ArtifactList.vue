@@ -15,10 +15,10 @@
       </thead>
       <tbody>
       <tr v-for="artifact in artifacts" :key="artifact.id">
-        <td>{{ artifact.id }}</td>
-        <td>{{ artifact.artifactTitle }}</td>
-        <td>{{ artifact.artifactDescription }}</td>
-        <td>{{ artifact.artifactType }}</td>
+        <td>{{ artifact.info.id }}</td>
+        <td>{{ artifact.info.artifactTitle }}</td>
+        <td>{{ artifact.info.artifactDescription }}</td>
+        <td>{{ artifact.info.artifactType }}</td>
         <td>
           <input type="file" multiple @change="upload(artifact, $event)" />
         </td>
@@ -30,6 +30,9 @@
         </td>
         <td>
           <button @click="onDelete(artifact)">delete</button>
+        </td>
+        <td>
+          <button @click="onDownload(artifact)">download</button>
         </td>
       </tr>
       </tbody>
@@ -52,6 +55,8 @@ import CreateArtifactModal from '@/components/CreateArtifactModal.vue'
 import pagination from '@/components/Pagination/index.vue'
 import { useRoute, useRouter } from 'vue-router'
 import qs from 'qs'
+import { createWriteStream } from 'streamsaver';
+
 const queryParams = ref({
   pageNum: 1,
   pageSize: 10,
@@ -68,7 +73,7 @@ const router = useRouter()
 
 function fetchVideoList() {
   request({
-    url: 'melon/artifacts/v1/list',
+    url: 'melon-video/artifacts/v1/list',
     headers: {
       isToken: true,
       repeatSubmit: false
@@ -122,7 +127,7 @@ function upload(artifact,event) {
 function uploadVideo(artifact, event) {
   const file = event.target.files[0]
   request({
-    url: `melon/artifacts/v1/video`,
+    url: `melon-video/artifacts/v1/video`,
     method: 'post',
     timeout: 300000,
     data: file,
@@ -150,7 +155,7 @@ function navigateToVideo(artifact) {
 }
 
 function m3u8(artifact) {
-  router.push({ path: '/videohls', query: artifact })
+  router.push({ path: '/videohls', query: {"artifactId": artifact.info.id} })
 }
 
 function onDelete(artifact) {
@@ -168,6 +173,43 @@ function onDelete(artifact) {
       // Handle successful upload
       console.log('Video delete successfully')
       fetchVideoList()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+function onDownload(artifact) {
+  request({
+    url: `melon/artifacts/v1/video`,
+    method: 'get',
+    params: {
+      id: artifact.id,
+    },
+  })
+    .then((resp) => {
+      // Handle successful upload
+      const address = resp?.data
+      if (address && address.length) {
+        const fileStream =  createWriteStream('output.mp4')
+        const writer = fileStream.getWriter();
+        fetch(address).then(response => {
+          const reader = response.body.getReader();
+          function push() {
+            reader.read().then(({done, data}) => {
+              if (done) {
+                writer.close();
+                return;
+              }
+              writer.write(data);
+              push();
+            })
+          }
+          push();
+        })
+      }
+
+
     })
     .catch((err) => {
       console.log(err)

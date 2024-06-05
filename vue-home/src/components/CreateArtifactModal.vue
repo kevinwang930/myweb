@@ -37,10 +37,11 @@ const createArtifact = () => {
   formData.append('artifactTitle', title.value)
   formData.append('artifactDescription', description.value)
   formData.append('artifactType', type.value)
-  formData.append('cover', cover.value)
+  if (cover.value) formData.append('cover', cover.value)
+
 
   request({
-    url: 'melon/artifacts/v1/artifact',
+    url: 'melon-video/artifacts/v1/artifact',
     method: 'post',
     data: formData,
     headers: {'Content-Type': 'multipart/form-data'}

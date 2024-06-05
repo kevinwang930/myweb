@@ -26,12 +26,11 @@ onMounted(() => {
 
 
 function initHls() {
-  const artifactId = route.query?.id
+  const artifactId = route.query?.artifactId
   const video = videoElement.value
   if (Hls.isSupported()) {
     const hls = new Hls()
-    const token = getToken();
-    hls.loadSource(`http://localhost:8080/melon/artifacts/v1/m3u8?artifactId=${artifactId}&t=${token}`)
+    hls.loadSource(`http://localhost:8080/melon-video/artifacts/v1/m3u8?id=${artifactId}`)
     hls.attachMedia(video)
     video.play()
   }

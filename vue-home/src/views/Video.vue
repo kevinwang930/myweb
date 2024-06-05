@@ -25,23 +25,23 @@ onMounted(() => {
 
   if (isVideo.value) {
     request({
-      url: `melon/artifacts/v1/video`,
+      url: `melon-video/artifacts/v1/video`,
       timeout: 300000,
       params: {
-        artifactId: artifactId
+        id: artifactId
       },
       method: 'get'
     })
       .then((resp) => {
         // Append the stream to the video element
-        artifactSrc.value = resp
+        artifactSrc.value = resp.data
       })
       .catch((err) => {
         console.log(err)
       })
   } else {
     request({
-      url: `melon/artifacts/v1/images`,
+      url: `melon-video/artifacts/v1/images`,
       timeout: 300000,
       params: {
         id: artifactId
