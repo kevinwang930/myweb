@@ -44,6 +44,16 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: () => import('../views/register.vue')
+    },
+    {
+      path: "/socket",
+      name: 'socket',
+      component: () => import('../views/SocketView.vue')
+    },
+    {
+      path: "/websocket",
+      name: 'websocket',
+      component: () => import('../views/WebsocketView.vue')
     }
   ]
 })

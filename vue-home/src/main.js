@@ -15,7 +15,7 @@ import '@/assets/styles/index.scss' // global css
 
 import App from './App.vue'
 import router from './router'
-import './permission.js'
+// import './permission.js'
 import store from '@/store/index.js'
 
 const app = createApp(App)

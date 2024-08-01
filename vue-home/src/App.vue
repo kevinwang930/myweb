@@ -28,6 +28,8 @@ function handleRegister() {
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/video">video</RouterLink>
         <RouterLink to="/artifact-list">artifact list</RouterLink>
+        <RouterLink to="/socket">socket</RouterLink>
+        <RouterLink to="/websocket">websocket</RouterLink>
       </nav>
     </div>
   </header>
