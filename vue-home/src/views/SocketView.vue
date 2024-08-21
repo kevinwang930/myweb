@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import io from 'socket.io-client';
+import {io} from 'socket.io-client';
 
 export default {
   name: 'SocketIOTest',
@@ -25,7 +25,11 @@ export default {
   methods: {
     connect() {
       if (this.firstConnect) {
-        this.socket = io.connect("http://localhost:9092?mac=2");
+        this.socket = io("http://localhost:6501?mac=2", {
+          reconnection: false,
+          transports: ["websocket"]
+          }
+        );
         this.setupSocketListeners();
         this.firstConnect = false;
       } else {
